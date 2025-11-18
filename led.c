@@ -1,6 +1,8 @@
 #include "led.h"
 
-void led_init(void){
+#include "types.h"
+
+void led_initialize(void){
 	CLEARBIT(LED1_TRIS); // set Pin to Output
 	Nop();
 	CLEARBIT(LED2_TRIS); // set Pin to Output

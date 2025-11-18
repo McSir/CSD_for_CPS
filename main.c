@@ -1,70 +1,43 @@
 #include <xc.h>
-#include <p33Fxxxx.h>
-//do not change the order of the following 2 definitions
-#define FCY 12800000UL 
+//do not change the order of the following 2 lines
+#define FCY 12800000UL
 #include <libpic30.h>
-#include <string.h>
-#include <stdio.h>
 
+#include "types.h"
 #include "lcd.h"
 #include "led.h"
+#include "lab03.h"
 
 /* Configuration of the Chip */
 // Initial Oscillator Source Selection = Primary (XT, HS, EC) Oscillator with PLL
 #pragma config FNOSC = PRIPLL
 // Primary Oscillator Mode Select = XT Crystal Oscillator mode
 #pragma config POSCMD = XT
+// OSC2 Pin Function: OSC2 is Clock Output
+#pragma config OSCIOFNC = ON
 // Watchdog Timer Enable = Watchdog Timer enabled/disabled by user software
 // (LPRC can be disabled by clearing the SWDTEN bit in the RCON register)
 #pragma config FWDTEN = OFF
 
-
 int main(){
     //Init LCD and LEDs
     lcd_initialize();
-    led_init();
+    led_initialize();
 	
     // Clear the Screen and reset the cursor
     lcd_clear();
-    
     lcd_locate(0, 0);
-    lcd_printf("Group Members :");
     
-    lcd_locate(0, 1);
-    lcd_printf("* Bassel Abdelhaleem");
+    // Initialize DAC
+    dac_initialize();
     
-    lcd_locate(0, 2);
-    lcd_printf("* Maksim Eibozhenko");
+    // Initialize Timers
+    timer_initialize();
     
-    lcd_locate(0, 3);
-    lcd_printf("* Vianney Jerry Takou");
-    
-    lcd_locate(0, 7);
-    lcd_printf("Counter = ");
-    
-    uint8_t counter = 0;
-    lcd_locate(10, 7);
-    
+    // Start Lab03 Main Program
+    main_loop();
     
     // Stop
-    while(1) {
-       lcd_locate(10, 7);
-       lcd_printf("%i", counter);
-       counter++;
-      
-       
-       LED5_PORT = (counter >> 0) & 1;
-       Nop();
-       LED4_PORT = (counter >> 1) & 1;
-       Nop();
-       LED3_PORT = (counter >> 2) & 1;
-       Nop();
-       LED2_PORT = (counter >> 3) & 1;
-       Nop();
-       LED1_PORT = (counter >> 4) & 1;
-       Nop();
-       
-       __delay_ms(500);
-    }
+    while(1)
+        ;
 }
-
