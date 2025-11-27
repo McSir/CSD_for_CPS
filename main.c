@@ -6,7 +6,8 @@
 #include "types.h"
 #include "lcd.h"
 #include "led.h"
-#include "lab03.h"
+#include "dac.h"
+#include "lab04.h"
 
 /* Configuration of the Chip */
 // Initial Oscillator Source Selection = Primary (XT, HS, EC) Oscillator with PLL
@@ -20,16 +21,14 @@
 #pragma config FWDTEN = OFF
 
 int main(){
-    //Init LCD and LEDs
+    //Init LCD, LED, DAC
     lcd_initialize();
     led_initialize();
+    dac_initialize();
 	
     // Clear the Screen and reset the cursor
     lcd_clear();
     lcd_locate(0, 0);
-    
-    // Initialize DAC
-    dac_initialize();
     
     // Initialize Timers
     timer_initialize();
