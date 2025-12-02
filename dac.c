@@ -53,11 +53,13 @@ void dac_convert_milli_volt(uint16_t milliVolt)
 {
     uint16_t cmd;
     uint16_t i;
+    uint32_t start;
 
     cmd = 0;
     cmd |= (0u << 13) | (1u << 12);  // GA -> 1x 
                                      // SHDN -> 1 to activate DAC
-    cmd |= (milliVolt & 0x0FFFu); // add data bits
+
+    cmd |= (milliVolt*1000 & 0x0FFFu); // add data bits
 
     DAC_CS_PORT = 0;
     Nop();
